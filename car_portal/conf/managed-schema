@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="bare_minimal" version="1.5">
+    <types>
+        <fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
+        <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
+        <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="tint" class="solr.TrieIntField" precisionStep="8" positionIncrementGap="0"/>
+        <fieldType name="tfloat" class="solr.TrieFloatField" precisionStep="8" positionIncrementGap="0"/>
+        <fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" positionIncrementGap="0"/>
+        <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0"/>
+        <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
+        <fieldtype name="ignored" stored="false" indexed="false" multiValued="true" class="solr.StrField"/>
+        <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
+        <fieldType name="uuid" class="solr.UUIDField" indexed="true"/>
+        <fieldType name="text_nl" class="solr.TextField" positionIncrementGap="100">
+            <analyzer>
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_nl.txt" format="snowball"/>
+                <filter class="solr.StemmerOverrideFilterFactory" dictionary="lang/stemdict_nl.txt" ignoreCase="false"/>
+                <filter class="solr.HunspellStemFilterFactory" dictionary="lang/nl_NL.dic" affix="lang/nl_NL.aff" ignoreCase="true"/>
+            </analyzer>
+        </fieldType>
+    </types>
+
+    <fields>
+        <field name="vehicle_id" type="string" indexed="true" stored="true" required="true"/>
+        <field name="published_date" type="date" indexed="true" />
+        <field name="brand" type="string" indexed="true" stored="true"/>
+        <field name="series" type="string" indexed="true" stored="true"/>
+        <field name="model" type="string" indexed="false" stored="true"/>
+        <field name="body" type="string" indexed="true" stored="false"/>
+        <field name="transmission" type="string" indexed="true" stored="true"/>
+        <field name="fuel" type="string" indexed="true" stored="true"/>
+        <field name="mileage" type="int" indexed="true" stored="true" />
+        <field name="year" type="int" indexed="true" stored="true" />
+        <field name="images" type="string" indexed="false" stored="true" multiValued="true"/>
+        <field name="accessories" type="string" indexed="true" stored="false" multiValued="true"/>
+        <field name="dealer_id" type="string" indexed="true" stored="false"/>
+        <field name="dealer_name" type="string" indexed="true" stored="true"/>
+        <field name="dealer_city" type="string" indexed="true" stored="true"/>
+        <field name="dealer_provence" type="string" indexed="true" stored="false"/>
+        <field name="lat_lng" type="location" indexed="true" stored="false"/>
+
+        <field name="_version_" type="long" indexed="true" stored="true"/>
+        <dynamicField name="*_coordinate" type="tdouble" indexed="true" stored="false"/>
+        <field name="search_text" type="text_nl" indexed="true" stored="false"  multiValued="true"/>
+    </fields>
+
+    <uniqueKey>vehicle_id</uniqueKey>
+
+    <copyField source="brand" dest="search_text"/>
+    <copyField source="series" dest="search_text"/>
+    <copyField source="model" dest="search_text"/>
+    <copyField source="year" dest="search_text"/>
+    <copyField source="transmission" dest="search_text"/>
+    <copyField source="body" dest="search_text"/>
+    <copyField source="fuel" dest="search_text"/>
+</schema>
