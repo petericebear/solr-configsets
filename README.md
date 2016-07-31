@@ -13,6 +13,8 @@ Every configset has a is designed for a specific branche to get started quickly 
     This schema only has the basic field types of only an id and _version_ field.
 - car_portal  
     This schema is for a used/new cars portal.
+- laravel_scout
+    This schema will be the placeholder for Laravel Scout. (Soon)
 - job_board  
     Soon.
 - travel_site  
@@ -26,7 +28,7 @@ I will add some more configurations for some branches in the future. These are b
 How to use these configuration sets
 -----------------------------------
 
-When you install SOLR 6.1.0 to your server the default location of the configsets are '/opt/solr/server/solr/configsets/'. You can clone this repository into that folder to make use of all these configuration sets. If you want to use a single set, just download a single folder into the default location. 
+When you install SOLR 6.1.0 to your server the default location of the configsets is '/opt/solr/server/solr/configsets/'. You can clone this repository into that folder to make use of all these configuration sets. If you want to use a single set, just download a single folder into the default location. 
 
 If you login to the server as the user solr you can run the following command to create a new SOLR core with a given configset folder.
 
